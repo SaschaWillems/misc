@@ -99,7 +99,8 @@ Capturing and saving an image after a scene has been rendered using blits to cop
 ### Compute shader
 
 #### [01 - Image processing](examples/computeshader/)
-Demonstrates the basic use of a separate compute queue (and command buffer) to apply different convolution kernels on an input image in realtime.
+**New Description**<br>
+Uses a compute shader along with a separate compute queue to apply different convolution kernels (and effects) on an input image in realtime.
 
 #### [02 - GPU particle system](examples/computeparticles/)
 Attraction based particle system. A shader storage buffer is used to store particle on which the compute shader does some physics calculations. The buffer is then used by the graphics pipeline for rendering with a gradient texture for. Demonstrates the use of memory barriers for synchronizing vertex buffer access between a compute and graphics pipeline
@@ -116,7 +117,7 @@ Implements a simple ray tracer using a compute shader. No primitives are rendere
 #### [06 - Cull and LOD](examples/computecullandlod/)
 Based on ```indirect drawing``` this example uses a compute shader for visibility testing using ```frustum culling``` and ```level-of-detail selection``` based on object's distance to the viewer. A compute shader is applied to the indirect draw commands buffer that updates the indirect draw calls depending on object visibility and camera distance. This moves all visibility calculations to the GPU so the indirect draw buffer can stay in device local memory without having to map it back to the host for CPU-based updates.
 
-### Performance (?)
+### Performance
 
 #### [01 - Multi threaded command buffer generation](examples/multithreading/)
 This example demonstrates multi threaded command buffer generation. All available hardware threads are used to generated n secondary command buffers concurrent, with each thread also checking object visibility against the current viewing frustum. Command buffers are rebuilt on each frame. Once all threads have finished (and all secondary command buffers have been constructed), the secondary command buffers are executed inside the primary command buffer and submitted to the queue.
@@ -128,10 +129,12 @@ Uses instancing for rendering multiple instances of the same mesh using differen
 This example renders thousands of instanced objects with different geometries using only one single indirect draw call (if ```multiDrawIndirect``` is supported). Unlike direct drawing function, indirect drawing functions take their draw commands from a buffer object containing information like index count, index offset and number of instances to draw. Shows how to generate and render such an indirect draw command buffer that is staged to the device. Indirect draw buffers are the base for generating and updating draw commands on the GPU using shaders.
 
 #### [04 - Occlusion queries](examples/occlusionquery/)
-Shows how to use occlusion queries to determine object visibility depending on the number of passed samples for a given object. Does an occlusion pass first, drawing all objects (and the occluder) with basic shaders, then reads the query results to conditionally color the objects during the final pass depending on their visibility.
+**New Description**<br>
+Using query pool objects to get number of passed samples for rendered primitives got determining on-screen visibility.
 
 #### [05 - Pipeline statistics](examples/pipelinestatistics/)
-```missing description```
+**New Description**<br>
+Using query pool objects to gather statistics from different stages of the pipeline like vertex, fragment shader and tessellation evaluation shader invocations depending on payload.
 
 ### Physically based rendering
 
@@ -154,19 +157,16 @@ Renders a model specially crafted for a metallic-roughness PBR workflow with tex
 These examples use a [deferred shading](https://en.wikipedia.org/wiki/Deferred_shading) setup.
 
 #### [01 - Deferred shading basics](examples/deferred/)
-Demonstrates the use of multiple render targets to fill a G-Buffer for a deferred shading setup with multiple dynamic lights and normal mapped surfaces.
-
-Deferred shading collects all values (color, normal, position) into different render targets in one pass thanks to multiple render targets, and then does all shading and lighting calculations based on these in screen space, thus allowing for much more light sources than traditional forward renderers.
+**New Description**<br>
+Uses multiple render targets to fill all attachments (albedo, normals, position, depth) required for a G-Buffer in a single pass. A deferred pass then uses these to calculate shading and lighting in screen space, so that calculations only have to be done for visible fragments independent of no. of lights.
 
 #### [02 - Deferred multi sampling](examples/deferredmultisampling/)
-```missing description```
+**New Description**<br>
+Adds multi sampling to a deferred renderer using manual resolve in the fragment shader.
 
 #### [03 - Deferred shading shadow mapping](examples/deferredshadows/)
-Building on the deferred shading setup this example adds directional shadows using shadow maps from multiple spotlights.
-
-Scene depth from the different light's point-of-view is renderer to a layered depth attachment using only one pass. This is done using multiple geometry shader invocations that allows to output multiple instances of the same geometry using different matrices into the layers of the depth attachment.
-
-The final scene compositing pass then samples from the layered depth map to determine if a fragment is shadowed or not.
+**New Description**<br>
+Adds shadows from multiple spotlights to a deferred renderer using a layered depth attachment filled in one pass using multiple geometry shader invocations.
 
 #### [04 - Screen space ambient occlusion](examples/ssao/)
 **New Description**<br>
