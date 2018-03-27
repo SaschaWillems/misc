@@ -1,6 +1,6 @@
 # Vulkan C++ examples and demos
 
-A comprehensive collection of open source C++ examples for [Vulkan(tm)](https://www.khronos.org/vulkan/), the new graphics and compute API from Khronos.
+A comprehensive collection of open source C++ examples for [Vulkan®](https://www.khronos.org/vulkan/), the new graphics and compute API from Khronos.
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BHXPMV6ZKPH9E)
 
@@ -29,7 +29,7 @@ from the root of the repository after cloning or see [this](data/README.md) for 
 
 The repository contains everything required to compile and build the examples on <img src="./images/windowslogo.png" alt="" height="22px" valign="bottom"> Windows, <img src="./images/linuxlogo.png" alt="" height="24px" valign="bottom"> Linux, <img src="./images/androidlogo.png" alt="" height="24px" valign="bottom"> Android, <img src="./images/applelogo.png" alt="" valign="bottom" height="24px"> iOS and macOS (using MoltenVK) using a C++ compiler that supports C++11.
 
-Check [BUILD.md](BUILD.md) for details on how to build for the different platforms.
+See [BUILD.md](BUILD.md) for details on how to build for the different platforms.
 
 ## Examples
 
@@ -41,7 +41,7 @@ Basic and verbose example for getting a colored triangle rendered to the screen 
 
 #### [02 - Pipelines](examples/pipelines/)
 **New Description**<br>
-Demonstrates the use of pipeline state objects (pso) that bake state information (rasterization states, culling modes, etc.) along with the shaders into a single object, making it easy for an implementation to optimize usage (compared to OpenGL's dynamic state machine). Also demonstrates the use of [pipeline derivatives](https://www.khronos.org/registry/vulkan/specs/1.0/xhtml/vkspec.html#pipelines-pipeline-derivatives).
+Using pipeline state objects (pso) that bake state information (rasterization states, culling modes, etc.) along with the shaders into a single object, making it easy for an implementation to optimize usage (compared to OpenGL's dynamic state machine). Also demonstrates the use of pipeline derivatives.
 
 #### [03 - Dynamic uniform buffers](examples/dynamicuniformbuffer/)
 **New Description**<br>
@@ -136,30 +136,38 @@ Capturing and saving an image after a scene has been rendered using blits to cop
 Uses a compute shader along with a separate compute queue to apply different convolution kernels (and effects) on an input image in realtime.
 
 #### [02 - GPU particle system](examples/computeparticles/)
-Attraction based particle system. A shader storage buffer is used to store particle on which the compute shader does some physics calculations. The buffer is then used by the graphics pipeline for rendering with a gradient texture for. Demonstrates the use of memory barriers for synchronizing vertex buffer access between a compute and graphics pipeline
+**New Description**<br>
+Attraction based 2D GPU particle system using compute shaders. Particle data is stored in a shader storage buffer and only modified on the GPU using memory barriers for synchronizing compute particle updates with graphics pipeline vertex access.
 
 #### [03 - N-body simulation](examples/computenbody/)
-Implements a N-body simulation based particle system with multiple attractors and particle-to-particle interaction using two passes separating particle movement calculation and final integration. Also shows how to use ```shared compute shader memory``` for a significant performance boost.
+**New Description**<br>
+N-body simulation based particle system with multiple attractors and particle-to-particle interaction using two passes separating particle movement calculation and final integration. Shared compute shader memory is used to speed up compute calculations.
 
 #### [04 - Ray tracing](examples/raytracing/)
-Implements a simple ray tracer using a compute shader. No primitives are rendered by the traditional pipeline except for a fullscreen quad that displays the ray traced results of the scene rendered by the compute shaders. Also implements shadows and basic reflections.
+**New Description**<br>
+Simple GPU ray tracer with shadows and reflections using a compute shader. No scene geometry is rendered in the graphics pass.
 
 #### [05 - Cloth simulation](examples/computecloth/)
-```missing description```
+**New Description**<br>
+Mass-spring based cloth system on the GPU using a compute shader to calculate and integrate spring forces, also implementing basic collision with a fixed scene object.
 
 #### [06 - Cull and LOD](examples/computecullandlod/)
-Based on ```indirect drawing``` this example uses a compute shader for visibility testing using ```frustum culling``` and ```level-of-detail selection``` based on object's distance to the viewer. A compute shader is applied to the indirect draw commands buffer that updates the indirect draw calls depending on object visibility and camera distance. This moves all visibility calculations to the GPU so the indirect draw buffer can stay in device local memory without having to map it back to the host for CPU-based updates.
+**New Description**<br>
+Purely GPU based frustum visibility culling and level-of-detail system. A compute shader is used to modify draw commands stored in an indirect draw commands buffer to toggle model visibility and select it's level-of-detail based on camera distance, no calculations have to be done on and synced with the CPU.
 
 ### Performance
 
 #### [01 - Multi threaded command buffer generation](examples/multithreading/)
-This example demonstrates multi threaded command buffer generation. All available hardware threads are used to generated n secondary command buffers concurrent, with each thread also checking object visibility against the current viewing frustum. Command buffers are rebuilt on each frame. Once all threads have finished (and all secondary command buffers have been constructed), the secondary command buffers are executed inside the primary command buffer and submitted to the queue.
+**New Description**<br>
+Multi threaded parallel command buffer generation. Instead of prebuilding and reusing the same command buffers this sample uses multiple hardware threads to demonstrate parallel per-frame recreation of secondary command buffers that are executed and submitted in a primary buffer once all threads have finished.
 
 #### [02 - Instancing](examples/instancing/)
-Uses instancing for rendering multiple instances of the same mesh using different attributes. A secondary vertex buffer containing instanced data (in device local memory) is used to pass instanced data to the shader via vertex attributes, including a texture layer index for using different textures per-instance. Also shows how to mix instanced and non-instanced object rendering.
+**New Description**<br>
+Uses the instancing feature for rendering many instances of the same mesh from a single vertex buffer with variable parameters and textures (indexing a layered texture). Instanced data is passed using a secondary vertex buffer.
 
 #### [03 - Indirect drawing](examples/indirectdraw/)
-This example renders thousands of instanced objects with different geometries using only one single indirect draw call (if ```multiDrawIndirect``` is supported). Unlike direct drawing function, indirect drawing functions take their draw commands from a buffer object containing information like index count, index offset and number of instances to draw. Shows how to generate and render such an indirect draw command buffer that is staged to the device. Indirect draw buffers are the base for generating and updating draw commands on the GPU using shaders.
+**New Description**<br>
+Rendering thousands of instanced objects with different geometry using one single indirect draw call instead of issuing separate draws. All draw commands to be executed are stored in a dedicated indirect draw buffer object (storing index count, offset, instance count, etc.) that is uploaded to the device and sourced by the indirect draw command for rendering.
 
 #### [04 - Occlusion queries](examples/occlusionquery/)
 **New Description**<br>
