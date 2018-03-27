@@ -1,3 +1,36 @@
+# Vulkan C++ examples and demos
+
+A comprehensive collection of open source C++ examples for [Vulkan(tm)](https://www.khronos.org/vulkan/), the new graphics and compute API from Khronos.
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BHXPMV6ZKPH9E)
+
+## Cloning
+This repository contains submodules for external dependencies, so when doing a fresh clone you need to clone recursively:
+
+```
+git clone --recursive https://github.com/SaschaWillems/Vulkan.git
+``` 
+
+Existing repositories can be updated manually:
+
+```
+git submodule init
+git submodule update
+```
+
+## Assets
+Many examples require assets from the asset pack that is not part of this repository due to file size. A python script is included to download the asset pack that. Run
+
+    python download_assets.py
+
+from the root of the repository after cloning or see [this](data/README.md) for manual download.
+
+## Building
+
+The repository contains everything required to compile and build the examples on <img src="./images/windowslogo.png" alt="" height="22px" valign="bottom"> Windows, <img src="./images/linuxlogo.png" alt="" height="24px" valign="bottom"> Linux, <img src="./images/androidlogo.png" alt="" height="24px" valign="bottom"> Android, <img src="./images/applelogo.png" alt="" valign="bottom" height="24px"> iOS and macOS (using MoltenVK) using a C++ compiler that supports C++11.
+
+Check [BUILD.md](BUILD.md) for details on how to build for the different platforms.
+
 ## Examples
 
 ### Basics
@@ -212,7 +245,7 @@ Only uses compute shader capabilities for running calculations on an input data 
 
 #### [01 - Text rendering](examples/textoverlay/)
 **New Description**<br>
-Load and render a 2D text overlay created from the bitmap glyph data of a [stb font file](http://nothings.org/stb/font/). This data is uploaded as a texture and used for displaying text on top of a 3D scene in a second pass.
+Load and render a 2D text overlay created from the bitmap glyph data of a [stb font file](https://nothings.org/stb/font/). This data is uploaded as a texture and used for displaying text on top of a 3D scene in a second pass.
 
 #### [02 - Distance field fonts](examples/distancefieldfonts/)
 **New Description**<br>
@@ -252,7 +285,7 @@ Uses push descriptors apply the push constants concept to descriptor sets. Inste
 
 #### [03 - Debug markers (VK_EXT_debug_marker)](examples/debugmarker/)
 **New Description**<br>
-Uses the VK_EXT_debug_marker extension to set debug markers, regions and to name Vulkan objects for advanced debugging in graphics debuggers like [RenderDoc](http://www.renderdoc.org). Details can be found in [this tutorial](http://www.saschawillems.de/?page_id=2017).
+Uses the VK_EXT_debug_marker extension to set debug markers, regions and to name Vulkan objects for advanced debugging in graphics debuggers like [RenderDoc](https://www.renderdoc.org). Details can be found in [this tutorial](https://www.saschawillems.de/?page_id=2017).
 
 ### Misc
 
@@ -263,3 +296,6 @@ Vulkan interpretation of glxgears. Procedurally generates and animates multiple 
 #### [02 - Vulkan demo scene](examples/vulkanscene/)
 **New Description**<br>
 Renders a Vulkan demo scene with logos and mascots. Not an actual example but more of a playground and showcase.
+
+## Credits and attributions
+See [CREDITS.md](CREDITS.md) for additional credits and attributions.
